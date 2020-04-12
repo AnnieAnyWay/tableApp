@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  font-size: calc(10px + 1vmin);
+  color: white;
+  padding: 3% 10%;
+  box-sizing: border-box;
 }
 
 .App-logo {
@@ -13,17 +23,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +34,149 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.config>label{
+  display: block;
+  margin-bottom: 20px;
+}
+
+.config__input{
+  margin-left: 20px;
+  background-color: transparent;
+  color: #ffffff;
+  padding: 5px;
+  border: none;
+  border-bottom: 2px solid #61dafb;
+  transition: all ease-in .2ms;
+  font-size: 1.2em;
+  width: 100px;
+}
+
+.config__input:focus{
+  outline: none;
+  border-bottom: 2px solid #ffffff;
+  transition: all ease-in .2s;
+}
+
+.config__btn{
+  padding: 12px;
+  background-color: #61dafb;
+  border: 2px solid #61dafb;
+  color: #282c34;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 700;
+  transition: all ease-in .2s;
+}
+
+.config__btn:hover{
+  background-color: white;
+  transition: all ease-in .2s;
+}
+
+.config__btn:focus{
+  outline: none;
+}
+
+.table-container{
+  margin-top: 30px;
+}
+
+.table{
+  color: #282c34;
+  letter-spacing: .02em;
+}
+
+.table__cell{
+  font-weight: 700;
+  padding: 25px 10px;
+  background-color: rgba(97, 218, 251, 0.7);
+  border: 1px solid #282c34;
+  cursor: pointer;
+  position: relative;
+  transition: all ease-in-out .2s;
+}
+
+.table__cell_sum{
+  background-color: #8f329f;
+  color: #f4f4f4;
+  padding: 25px 15px;
+}
+
+.table__cell_avr{
+  background-color: #673ab7;
+  color: #f4f4f4;
+}
+
+.table__cell_avr.table__cell_avr:hover{
+  background-color: #673ab7;
+}
+
+.table__cell_sum.table__cell_sum:hover{
+  background-color: deeppink;
+}
+
+.table__cell_hovered, .table__cell:hover{
+  background-color: aqua;
+  transition: all ease-in-out .2s;
+}
+
+.table__btn{
+  transition: all ease-in .2s;
+  cursor: pointer;
+}
+.table__btn div{
+  font-size: 1.7em;
+  transition: all ease-in .2s;
+}
+
+.table-row-remove{
+  font-size: 1.6em;
+  font-weight: 400;
+  padding: 20px;
+  color: #f4f4f4;
+  transition: all ease-in .2s;
+  cursor: pointer;
+}
+
+.table-row-remove:hover,
+.table__btn:hover div{
+  color: #61dafb;
+  transition: all ease-in .2s;
+}
+
+.percent-holder{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  /*background-color: #fcc1d5;*/
+  background-color: #282c34;
+}
+
+.percent{
+  position: absolute;
+  width: 100%;
+  height: 0;
+  left: 0;
+  bottom: 0;
+  background-color: deeppink;
+  transition: height linear .2s;
+  z-index: 5;
+}
+
+.percent-num{
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  font-size: 1.2em;
+  letter-spacing: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f4f4f4;
 }
