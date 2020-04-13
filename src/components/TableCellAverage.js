@@ -1,16 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TableCellAverage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {cell: null}
-    }
 
-    render() {
-        return (
-            <td className='table__cell table__cell_avr'>{this.props.cell}</td>
-        )
-    }
-}
+const TableCellAverage = ({ cell }) => (
+
+    <td className='table__cell table__cell_avr'>{cell}</td>
+);
 
 export default TableCellAverage;

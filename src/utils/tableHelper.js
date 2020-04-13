@@ -1,38 +1,34 @@
-export const createMatrix =  (rows, cols, initial) => {
-    let arr = [];
-    for (let i = 0; i < rows; ++i) {
-        let columns = [];
-        for (let j = 0; j < cols; ++j) {
-            columns[j] = initial;
-        }
-        arr[i] = columns;
-    }
-    return arr;
-};
+const ID_SEPARATOR = '-';
 
 export const randomInteger = (min, max) => {
-    let rand = min + Math.random() * (max + 1 - min);
+    const rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
 };
 
+export const getCoordsFromId = (id) => String(id).split(ID_SEPARATOR).map(Number);
+
+export const getIdByCoords = (x, y) => `${x}${ID_SEPARATOR}${y}`;
+
 export const createTable = (rows, cols, initial, min, max) => {
-    return createMatrix(rows, cols, initial)
-        .map((item, i, arr) => {
-            return item.map((item2, j) => {
-                let id = +`${i + 1}${j + 1}`;
-                let amount = randomInteger(min, max);
-                return arr[i][j] = {id: id, amount: amount}
-            })
-        });
+    return new Array(rows)
+        .fill([])
+        .map((_, row) => {
+            return new Array(cols)
+                .fill([])
+                .map((_, col) => ({
+                    id: getIdByCoords(row, col),
+                    amount: randomInteger(min, max),
+                }))
+        })
 };
 
 export const getAverageOfCol = (rows, cols, arr) => {
     let total = 0;
     let average = 0;
-    let arrOfAverages = [];
+    const arrOfAverages = [];
 
-    for (let col = 0; col < cols; ++col) {
-        for (let row = 0; row < rows; ++row) {
+    for (let col = 0; col < cols; col++) {
+        for (let row = 0; row < rows; row++) {
             total += arr[row][col].amount;
         }
         average = total / rows;
@@ -44,53 +40,42 @@ export const getAverageOfCol = (rows, cols, arr) => {
 };
 
 export const incrementByID = (id, arr) => {
-    let splitId = [...id+''].map(n=>+n);
-    ++arr[splitId[0]-1][splitId[1]-1].amount;
+    const [x, y] = getCoordsFromId(id);
+    arr[x][y].amount++;
     return arr
 };
 
-export const getClosest = (id, arrMatrix, x) => {
-    let arrLinear = [];
-    let resultArr = [];
+export const getClosest = (id, arrMatrix, closestCount) => {
+    const [x, y] = getCoordsFromId(id);
 
-    arrMatrix.forEach(item => {
-        item.forEach(item2 => arrLinear.push(item2));
-    });
+    const {amount} = arrMatrix[x][y];
 
-    arrLinear = arrLinear.filter(function( item ) {
-        return item.id !== id;
-    });
-
-    let splitId = [...id+''].map(n=>+n);
-    const amount = arrMatrix[splitId[0]-1][splitId[1]-1].amount;
-
-    for (let i = 0; i < x; i++) {
-        let result = arrLinear.reduce((prev, curr) => Math.abs(curr.amount - amount) < Math.abs(prev.amount - amount) ? curr : prev);
-        resultArr.push(result);
-        arrLinear = arrLinear.filter(function( item ) {
-            return item.id !== result.id;
-        });
-        result = {};
-    }
-
-    return resultArr;
+    return arrMatrix
+        .flat(1)
+        .filter(function (cell) {
+            return cell.id !== id;
+        })
+        .sort((aCell, bCell) => {
+            return Math.abs(amount - aCell.amount) - Math.abs(amount - bCell.amount);
+        })
+        .slice(0, closestCount);
 };
 
 export const removingRow = (index, arr) => {
-    arr = arr.filter((item, i) => item[i] !== item[index]);
-    arr.forEach((item, i, arr) => {
-        item.forEach((item2, j) => {
-            arr[i][j].id = +`${i + 1}${j + 1}`;
+    arr = arr.filter((rows, i) => i !== index);
+    arr.forEach((row, i, arr) => {
+        row.forEach((col, j) => {
+            arr[i][j].id = getIdByCoords(i, j);
         })
     });
     return arr
 };
 
 export const addRow = (cols, arr, min, max) => {
-    let addedRow = [];
+    const addedRow = [];
     for (let i = 0; i < cols; ++i) {
-        let id = +`${cols + 1}${i + 1}`;
-        let amount = randomInteger(min, max);
+        const id = `${arr.length}${ID_SEPARATOR}${i}`;
+        const amount = randomInteger(min, max);
         addedRow.push({id: id, amount: amount})
     }
     arr.push(addedRow);

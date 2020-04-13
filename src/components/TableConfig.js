@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { configTable, createTable } from '../store/actions'
+import { configTable, createTable } from '../redux/actions'
 
 class TableConfig extends Component{
     constructor(props) {
@@ -31,7 +31,7 @@ class TableConfig extends Component{
                            onChange={(e) => this.setState({rows: +e.target.value})}/>
                 </label>
                 <label>
-                    Find __ cells with the closest amount
+                    Number of the closest amount cell
                     <input className='config__input'
                            type="number"
                            value={this.props.closest}

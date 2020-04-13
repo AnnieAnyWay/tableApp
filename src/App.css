@@ -36,6 +36,12 @@
   }
 }
 
+.config{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .config>label{
   display: block;
   margin-bottom: 20px;
@@ -51,6 +57,7 @@
   transition: all ease-in .2ms;
   font-size: 1.2em;
   width: 100px;
+  text-align: center;
 }
 
 .config__input:focus{
@@ -113,10 +120,12 @@
 
 .table__cell_avr.table__cell_avr:hover{
   background-color: #673ab7;
+  transition: all ease-in-out .1s;
 }
 
 .table__cell_sum.table__cell_sum:hover{
   background-color: deeppink;
+  transition: all ease-in-out .1s;
 }
 
 .table__cell_hovered, .table__cell:hover{

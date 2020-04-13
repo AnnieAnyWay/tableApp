@@ -28,8 +28,8 @@ const initialState = {
 function appReducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_TABLE:
-            let tableData = createTable(state.rows, state.columns, {}, minInt, maxInt);
-            let averageColArr = getAverageOfCol(state.rows, state.columns, tableData);
+            const tableData = createTable(state.rows, state.columns, {}, minInt, maxInt);
+            const averageColArr = getAverageOfCol(state.rows, state.columns, tableData);
             return {
                 ...state,
                 tableData: tableData,
@@ -43,11 +43,12 @@ function appReducer(state = initialState, action) {
                 closest: action.payload.closest
             };
         case INCREMENT:
-            let incrementedTableData = [...incrementByID(action.payload, state.tableData)];
+            const incrementedTableData = [...incrementByID(action.payload, state.tableData)];
             return {
                 ...state,
                 tableData: incrementedTableData,
-                averageColArr: getAverageOfCol(state.rows, state.columns, incrementedTableData)
+                averageColArr: getAverageOfCol(state.rows, state.columns, incrementedTableData),
+                closestArr: getClosest(action.payload, incrementedTableData, state.closest)
             };
         case FIND_CLOSEST:
             return {
@@ -60,8 +61,8 @@ function appReducer(state = initialState, action) {
                 closestArr: initialState.closestArr
             };
         case REMOVE_ROW:
-            let newTableData = [...removingRow(action.payload, state.tableData)];
-            let newRows = state.rows - 1;
+            const newTableData = [...removingRow(action.payload, state.tableData)];
+            const newRows = state.rows - 1;
             return {
                 ...state,
                 tableData: newTableData,
@@ -69,8 +70,8 @@ function appReducer(state = initialState, action) {
                 averageColArr: getAverageOfCol(newRows, state.columns, newTableData)
             };
         case ADD_ROW:
-            let updTableData = [...addRow(state.columns, state.tableData, minInt, maxInt)];
-            let updRows = state.rows + 1;
+            const updTableData = [...addRow(state.columns, state.tableData, minInt, maxInt)];
+            const updRows = state.rows + 1;
             return {
                 ...state,
                 tableData: updTableData,

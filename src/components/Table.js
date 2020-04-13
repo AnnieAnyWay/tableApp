@@ -9,7 +9,7 @@ import {increment,
         clearClosest,
         removeRow,
         addRow
-} from '../store/actions';
+} from '../redux/actions';
 
 class Table extends Component{
     constructor(props) {
@@ -20,15 +20,6 @@ class Table extends Component{
     setPercent = (index) => {
         this.setState({showPercent: index});
     };
-
-    removeRow = (index) => {
-        this.props.onRemoveRow(index);
-    };
-
-    addRow = () => {
-        this.props.onAddRow();
-    };
-
 
     render() {
 
@@ -64,7 +55,7 @@ class Table extends Component{
                                              left={() => this.setPercent(null)}
                                              key={`${index}-sum`} arr={item} />
                                 <td className='table-row-remove'
-                                    onClick={() => this.removeRow(index)}>
+                                    onClick={() => this.props.onRemoveRow(index)}>
                                     &#215;
                                 </td>
                             </tr>
@@ -78,7 +69,7 @@ class Table extends Component{
                 </tfoot>
             </table>
                 {this.props.rows && this.props.columns && (
-                    <div className='table__btn' onClick={() => this.addRow()}><div>+</div>add new row</div>
+                    <div className='table__btn' onClick={() => this.props.onAddRow()}><div>+</div>add new row</div>
                 )}
             </div>
         )
