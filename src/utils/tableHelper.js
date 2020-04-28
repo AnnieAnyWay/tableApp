@@ -40,9 +40,14 @@ export const getAverageOfCol = (rows, cols, arr) => {
 };
 
 export const incrementByID = (id, arr) => {
-    const [x, y] = getCoordsFromId(id);
-    arr[x][y] = Object.assign({}, arr[x][y], {amount: ++arr[x][y].amount});
-    return arr
+    return arr.map(subArr => {
+        return subArr.map(obj => {
+            if(obj.id === id) {
+                return {...obj, amount: ++obj.amount}
+            }
+            return obj
+        });
+    });
 };
 
 export const getClosest = (id, arrMatrix, closestCount) => {
