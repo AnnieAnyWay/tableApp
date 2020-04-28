@@ -41,11 +41,8 @@ export const getAverageOfCol = (rows, cols, arr) => {
 
 export const incrementByID = (id, arr) => {
     const [x, y] = getCoordsFromId(id);
-    const newArr = arr.map(subArr => {
-        return subArr.slice().map(obj => Object.assign({}, obj));
-    });
-    newArr[x][y].amount++;
-    return newArr
+    arr[x][y] = Object.assign({}, arr[x][y], {amount: ++arr[x][y].amount});
+    return arr
 };
 
 export const getClosest = (id, arrMatrix, closestCount) => {
@@ -66,9 +63,9 @@ export const getClosest = (id, arrMatrix, closestCount) => {
 
 export const removingRow = (index, arr) => {
     let filteredArr = arr.filter((rows, i) => i !== index);
-    filteredArr.forEach((row, i, arr) => {
-        row.forEach((col, j) => {
-            arr[i][j].id = getIdByCoords(i, j);
+    filteredArr.map((row, i) => {
+        return row.map((item, j) => {
+            return item.id = getIdByCoords(i, j);
         })
     });
     return filteredArr
