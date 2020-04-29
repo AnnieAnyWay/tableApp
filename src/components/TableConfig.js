@@ -1,14 +1,27 @@
+// @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { configTable, createTable } from '../redux/actions'
 
-class TableConfig extends Component{
-    constructor(props) {
+export type TableConfigState = {
+    columns: number,
+    rows: number,
+    closest: number,
+};
+
+type Props = {
+    columns: number,
+    rows: number,
+    closest: number,
+    onConfigTable: (TableConfigState) => void,
+};
+
+class TableConfig extends Component<Props, TableConfigState>{
+    constructor(props: Props) {
         super(props);
-        this.state = {columns: null, rows: null, closest: null};
     }
 
-    createTable = (event) => {
+    createTable = (event: SyntheticEvent<HTMLButtonElement>) => {
         event.preventDefault();
         this.props.onConfigTable(this.state);
     };
@@ -46,7 +59,7 @@ class TableConfig extends Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        onConfigTable: (state) => {
+        onConfigTable: (state: TableConfigState) => {
             dispatch(configTable(state));
             dispatch(createTable());
         }

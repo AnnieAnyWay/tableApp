@@ -1,6 +1,14 @@
+// @flow
 import React from 'react';
+import type {CellData} from '../redux/reducers';
 
-const TableColSum = ({arr, hovered, left}) => (
+type Props = {
+    arr: Array<CellData>,
+    hovered: () => void,
+    left: () => void
+}
+
+const TableColSum = ({arr, hovered, left}: Props) => (
 
     <td className='table__cell table__cell_sum' onMouseEnter={hovered}
         onMouseOut={left}>

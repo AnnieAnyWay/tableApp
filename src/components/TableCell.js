@@ -1,7 +1,20 @@
+// @flow
 import React from 'react';
+import type {CellData} from '../redux/reducers';
 
-const TableCell = ({val, valPercent, colored, clicked, hovered, clear, showPercent}) => {
+type Props = {
+    val: number,
+    valPercent: string,
+    colored: boolean,
+    clicked: () => void,
+    hovered: () => void,
+    clear: () => void,
+    showPercent: boolean
+}
 
+const TableCell = ({val, valPercent, colored, clicked, hovered, clear, showPercent}: Props) => {
+
+    console.log('render');
     const cellClass = colored ? 'table__cell table__cell_hovered' : 'table__cell';
     const stylePercent = {height: valPercent + '%'};
 
@@ -31,4 +44,4 @@ const propsAreEqual = (prevMovie, nextMovie) => {
            prevMovie.colored === nextMovie.colored;
 };
 
-export default React.memo(TableCell, propsAreEqual);
+export default React.memo<Props>(TableCell, propsAreEqual);

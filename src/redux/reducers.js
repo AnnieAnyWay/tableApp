@@ -1,3 +1,4 @@
+// @flow
 import {
     CREATE_TABLE,
     CONFIG_TABLE,
@@ -15,8 +16,23 @@ import { createTable,
         addRow
 } from '../utils/tableHelper';
 import { minInt, maxInt} from '../configs/intConfig';
+import type {Action} from './actions';
 
-const initialState = {
+export type CellData = {
+    id: string,
+    amount: number
+}
+
+export type Store = {
+    rows: number,
+    columns: number,
+    closest: number,
+    tableData: Array<Array<CellData>>,
+    averageColArr: Array<string>,
+    closestArr: Array<CellData>
+}
+
+const initialState: Store = {
     rows: null,
     columns: null,
     closest: null,
@@ -25,10 +41,10 @@ const initialState = {
     closestArr: []
 };
 
-function appReducer(state = initialState, action) {
+function appReducer(state: Store = initialState, action: any): Store {
     switch (action.type) {
         case CREATE_TABLE:
-            const tableData = createTable(state.rows, state.columns, {}, minInt, maxInt);
+            const tableData = createTable(state.rows, state.columns, minInt, maxInt);
             const averageColArr = getAverageOfCol(state.rows, state.columns, tableData);
             return {
                 ...state,

@@ -1,15 +1,18 @@
+// @flow
+import type {CellData} from '../redux/reducers';
+
 const ID_SEPARATOR = '-';
 
-export const randomInteger = (min, max) => {
+export const randomInteger = (min: number, max: number): number=> {
     const rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
 };
 
-export const getCoordsFromId = (id) => String(id).split(ID_SEPARATOR).map(Number);
+export const getCoordsFromId = (id: string): Array<number> => String(id).split(ID_SEPARATOR).map(Number);
 
-export const getIdByCoords = (x, y) => `${x}${ID_SEPARATOR}${y}`;
+export const getIdByCoords = (x: number, y: number): string => `${x}${ID_SEPARATOR}${y}`;
 
-export const createTable = (rows, cols, initial, min, max) => {
+export const createTable = (rows: number, cols: number, min: number, max: number): Array<Array<CellData>> => {
     return new Array(rows)
         .fill([])
         .map((_, row) => {
@@ -22,7 +25,7 @@ export const createTable = (rows, cols, initial, min, max) => {
         })
 };
 
-export const getAverageOfCol = (rows, cols, arr) => {
+export const getAverageOfCol = (rows: number, cols: number, arr: Array<Array<CellData>>) => {
     let total = 0;
     let average = 0;
     const arrOfAverages = [];
@@ -39,7 +42,7 @@ export const getAverageOfCol = (rows, cols, arr) => {
     return arrOfAverages;
 };
 
-export const incrementByID = (id, arr) => {
+export const incrementByID = (id: string, arr: Array<Array<CellData>>): Array<Array<CellData>> => {
     return arr.map(subArr => {
         return subArr.map(obj => {
             if(obj.id === id) {
@@ -50,23 +53,23 @@ export const incrementByID = (id, arr) => {
     });
 };
 
-export const getClosest = (id, arrMatrix, closestCount) => {
+export const getClosest = (id: string, arrMatrix: Array<Array<CellData>>, closestCount: number): Array<CellData> => {
     const [x, y] = getCoordsFromId(id);
 
     const {amount} = arrMatrix[x][y];
 
     return arrMatrix
         .flat(1)
-        .filter(function (cell) {
+        .filter(function (cell: CellData): Array<CellData> {
             return cell.id !== id;
         })
-        .sort((aCell, bCell) => {
+        .sort((aCell: CellData, bCell: CellData) => {
             return Math.abs(amount - aCell.amount) - Math.abs(amount - bCell.amount);
         })
         .slice(0, closestCount);
 };
 
-export const removingRow = (index, arr) => {
+export const removingRow = (index: number, arr: Array<Array<CellData>>): Array<Array<CellData>> => {
     let filteredArr = arr.filter((rows, i) => i !== index);
     filteredArr.map((row, i) => {
         return row.map((item, j) => {
@@ -76,7 +79,7 @@ export const removingRow = (index, arr) => {
     return filteredArr
 };
 
-export const addRow = (cols, arr, min, max) => {
+export const addRow = (cols: number, arr: Array<Array<CellData>>, min: number, max: number): Array<Array<CellData>> => {
     const addedRow = [];
     for (let i = 0; i < cols; ++i) {
         const id = `${arr.length}${ID_SEPARATOR}${i}`;

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -10,14 +11,32 @@ import {increment,
         removeRow,
         addRow
 } from '../redux/actions';
+import type {CellData} from '../redux/reducers';
 
-class Table extends Component{
-    constructor(props) {
+type Props = {
+    columns: number,
+    rows: number,
+    tableData: Array<Array<CellData>>,
+    averageColArr: Array<string>,
+    closestArr: Array<CellData>,
+    onIncrement: (string) => void,
+    onFindClosest: (string) => void,
+    onClearClosest: () => void,
+    onRemoveRow: (number) => void,
+    onAddRow: () => void
+}
+
+type State = {
+    showPercent: any
+}
+
+class Table extends Component<Props, State>{
+    constructor(props: Props) {
         super(props);
         this.state = {showPercent: null}
     }
 
-    setPercent = (index) => {
+    setPercent = (index: any) => {
         this.setState({showPercent: index});
     };
 
