@@ -1,31 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TableCell extends Component {
-    constructor(props) {
-        super(props);
-    }
+const TableCell = ({val, valPercent, colored, clicked, hovered, clear, showPercent}) => {
 
-    render() {
-        const cellClass = this.props.colored ? 'table__cell table__cell_hovered' : 'table__cell';
-        const stylePercent = {height: this.props.valPercent +'%'};
+    const cellClass = colored ? 'table__cell table__cell_hovered' : 'table__cell';
+    const stylePercent = {height: valPercent + '%'};
 
-        return (
-            <td className={cellClass}
-                onClick={this.props.clicked}
-                onMouseEnter={this.props.hovered}
-                onMouseLeave={this.props.clear}>
-                <b>{this.props.val}</b>
+    return (
+        <td className={cellClass}
+            onClick={clicked}
+            onMouseEnter={hovered}
+            onMouseLeave={clear}>
+            <b>{val}</b>
 
-                {this.props.showPercent && (
-                    <div className='percent-holder'>
-                        <div className='percent-num'>{this.props.valPercent}%</div>
-                        <div className='percent' style={stylePercent}></div>
-                    </div>
-                )}
+            {showPercent && (
+                <div className='percent-holder'>
+                    <div className='percent-num'>{valPercent}%</div>
+                    <div className='percent' style={stylePercent}></div>
+                </div>
+            )}
 
-            </td>
-        )
-    }
-}
+        </td>
+    )
 
-export default TableCell;
+};
+
+const propsAreEqual = (prevMovie, nextMovie) => {
+    return prevMovie.val === nextMovie.val &&
+           prevMovie.valPercent === nextMovie.valPercent &&
+           prevMovie.showPercent === nextMovie.showPercent &&
+           prevMovie.colored === nextMovie.colored;
+};
+
+export default React.memo(TableCell, propsAreEqual);
